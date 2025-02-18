@@ -5,4 +5,5 @@ import org.springframework.stereotype.Service;
 
 public interface CustomerService {
     void create(RequestCustomerDto dto) throws Exception;
+    void update(RequestCustomerDto dto, String id);
 }

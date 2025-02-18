@@ -2,6 +2,7 @@ package com.pos_system.pos_system.service.impl;
 
 import com.pos_system.pos_system.dto.requestDto.RequestCustomerDto;
 import com.pos_system.pos_system.entity.Customer;
+import com.pos_system.pos_system.exception.BadRequestException;
 import com.pos_system.pos_system.exception.DuplicateEntryException;
 import com.pos_system.pos_system.exception.NotFoundException;
 import com.pos_system.pos_system.repository.CustomerRepo;
@@ -40,6 +41,29 @@ public class CustomerServiceImpl implements CustomerService {
             customer.setAge(dto.getAge());
             customerRepo.save(customer);
         } catch (Exception e) {
+            throw new RuntimeException("Unexpected error: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void update(RequestCustomerDto dto,String id) {
+        try{
+            if (dto.equals(null)){
+                throw new BadRequestException("Please Fill the Input");
+            }
+            Optional<Customer> selectedCus = customerRepo.findById(id);
+            if(selectedCus.isEmpty()){
+                throw new NotFoundException("User Not Found!");
+            }
+            Customer object = new Customer();
+            object.setPropertyId(id);
+            object.setName(dto.getName());
+            object.setEmail(dto.getEmail());
+            object.setAddress(dto.getAddress());
+            object.setPhone(dto.getPhone());
+            object.setAge(dto.getAge());
+            customerRepo.save(object);
+        }catch (Exception e){
             throw new RuntimeException("Unexpected error: " + e.getMessage());
         }
     }

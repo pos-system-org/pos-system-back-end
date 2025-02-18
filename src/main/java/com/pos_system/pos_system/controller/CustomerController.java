@@ -22,12 +22,17 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping
     public ResponseEntity<StandardResponse> create(@Validated @RequestBody RequestCustomerDto dto) throws Exception {
         customerService.create(dto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new StandardResponse("Customer Saved", 201, null));
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<StandardResponse> update(@Validated @RequestBody RequestCustomerDto dto,@PathVariable String id){
+        customerService.update(dto,id);
+        return ResponseEntity.status(HttpStatus.OK).body(new StandardResponse("Customer Updated!", 200, null));
     }
 
 }
