@@ -1,12 +1,12 @@
 package com.pos_system.pos_system.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -27,5 +27,7 @@ public class Customer {
     private String address;
     @Column(name = "isActive", columnDefinition = "TINYINT")
     private boolean isActive;
+    @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Order> orders;
 
 }
