@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/customers")
 @RequiredArgsConstructor
+@CrossOrigin
 public class CustomerController {
     private final CustomerService customerService;
     @PostMapping
