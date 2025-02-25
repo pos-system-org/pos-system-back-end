@@ -8,8 +8,6 @@ public interface OrderService {
     public ResponseOrderDto findById(String id);
     public void update(String id, RequestOrderDto dto);
 
-    void update(String id, ResponseOrderDto dto);
-
     public OrderPaginateDto findAll(String searchText, int page, int size);
     public void delete(String id);
 }

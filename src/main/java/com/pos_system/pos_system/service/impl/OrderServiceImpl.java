@@ -52,10 +52,6 @@ public class OrderServiceImpl implements OrderService {
         orderRepo.save(order);
     }
 
-    @Override
-    public void update(String id, ResponseOrderDto dto) {
-
-    }
 
 
     @Override
@@ -78,8 +74,7 @@ public class OrderServiceImpl implements OrderService {
                 .orderId(order.getOrderId())
                 .date(order.getDate())
                 .nett(order.getNett())
-                .customer(order.getCustomer())
-                .products(order.getProducts())
+                .customer(order.getCustomer().getName())
                 .build();
     }
 }

@@ -14,6 +14,5 @@ public class ResponseOrderDto {
     private String orderId;
     private Date date;
     private float nett;
-    private Customer customer;
-    private List<Product> products;
+    private String customer;
 }
