@@ -3,6 +3,8 @@ import com.pos_system.pos_system.dto.request.RequestCustomerDto;
 import com.pos_system.pos_system.dto.response.ResponseCustomerDto;
 import com.pos_system.pos_system.dto.response.paginate.CustomerPaginateDto;
 
+import java.util.List;
+
 public interface CustomerService{
     public void create(RequestCustomerDto dto);
     public ResponseCustomerDto findById(String id);
@@ -10,4 +12,5 @@ public interface CustomerService{
     public CustomerPaginateDto findAll(String searchText, int page, int size);
     public void delete(String id);
 
+    List<ResponseCustomerDto> customGetAll();
 }

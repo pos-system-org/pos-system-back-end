@@ -2,11 +2,11 @@ package com.pos_system.pos_system.dto.response;
 
 import lombok.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
-@Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Setter
+    @Getter
+    @Builder
 public class ResponseCustomerDto {
     private String propertyId;
     private String name;

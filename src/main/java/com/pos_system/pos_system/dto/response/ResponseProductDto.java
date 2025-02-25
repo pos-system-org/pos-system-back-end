@@ -10,6 +10,6 @@ import lombok.*;
 public class ResponseProductDto {
     private String productId;
     private String description;
-    private double uitPrice;
+    private double unitPrice;
     private int qty;
 }

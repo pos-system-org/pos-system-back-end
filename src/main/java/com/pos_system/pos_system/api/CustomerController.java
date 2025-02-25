@@ -1,11 +1,14 @@
 package com.pos_system.pos_system.api;
 import com.pos_system.pos_system.dto.request.RequestCustomerDto;
+import com.pos_system.pos_system.dto.response.ResponseCustomerDto;
 import com.pos_system.pos_system.service.CustomerService;
 import com.pos_system.pos_system.util.StandardResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/customers")
@@ -44,16 +47,23 @@ public class CustomerController {
             @RequestParam int size
     ){
         return new ResponseEntity<>(
-                new StandardResponse(201,"customer list!..",customerService.findAll(searchText,page,size)),
-                HttpStatus.CREATED
+                new StandardResponse(200,"customer list!..",customerService.findAll(searchText,page,size)),
+                HttpStatus.OK
         );
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<StandardResponse> delete(@PathVariable String id){
         customerService.delete(id);
         return new ResponseEntity<>(
-                new StandardResponse(201,"customer delete!..", null ),
-                HttpStatus.CREATED
+                new StandardResponse(204,"customer delete!..", null ),
+                HttpStatus.NO_CONTENT
+        );
+    }
+    @GetMapping("/customGet")
+    public ResponseEntity<StandardResponse> customGetAll(){
+        List<ResponseCustomerDto> list = customerService.customGetAll();
+        return new ResponseEntity<>(new StandardResponse(200,"customer list", list),
+                HttpStatus.OK
         );
     }
 

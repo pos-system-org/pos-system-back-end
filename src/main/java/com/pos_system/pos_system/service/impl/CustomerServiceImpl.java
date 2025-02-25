@@ -1,4 +1,5 @@
 package com.pos_system.pos_system.service.impl;
+
 import com.pos_system.pos_system.dto.request.RequestCustomerDto;
 import com.pos_system.pos_system.dto.response.ResponseCustomerDto;
 import com.pos_system.pos_system.dto.response.paginate.CustomerPaginateDto;
@@ -6,10 +7,11 @@ import com.pos_system.pos_system.entity.Customer;
 import com.pos_system.pos_system.repo.CustomerRepo;
 import com.pos_system.pos_system.service.CustomerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,6 +19,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepo customerRepo;
+
     @Override
     public void create(RequestCustomerDto dto) {
         Customer customer = Customer.builder()
@@ -33,7 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public ResponseCustomerDto findById(String id) {
         Optional<Customer> selectedCustomer = customerRepo.findById(id);
-        if (selectedCustomer.isEmpty()){
+        if (selectedCustomer.isEmpty()) {
             throw new RuntimeException("Customer Not Found");
         }
         return toResponseCustomer(selectedCustomer.get());
@@ -42,7 +45,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void update(String id, RequestCustomerDto dto) {
         Optional<Customer> selectedCustomer = customerRepo.findById(id);
-        if (selectedCustomer.isEmpty()){
+        if (selectedCustomer.isEmpty()) {
             throw new RuntimeException("Customer Not Found");
         }
         Customer customer = selectedCustomer.get();
@@ -66,10 +69,27 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void delete(String id) {
-          customerRepo.deleteById(id);
+        customerRepo.deleteById(id);
     }
 
-    private ResponseCustomerDto toResponseCustomer(Customer customer){
+    @Override
+    public List<ResponseCustomerDto> customGetAll() {
+        List<Customer> all = customerRepo.findAll();
+        List<ResponseCustomerDto> list = new ArrayList<>();
+        for (Customer c : all) {
+            list.add(ResponseCustomerDto.builder()
+                    .propertyId(c.getPropertyId())
+                    .name(c.getName())
+                    .address(c.getAddress())
+                    .phone(c.getPhone())
+                    .email(c.getEmail())
+                    .isActive(c.isActive())
+                    .build());
+        }
+        return list;
+    }
+
+    private ResponseCustomerDto toResponseCustomer(Customer customer) {
         return ResponseCustomerDto.builder()
                 .propertyId(customer.getPropertyId())
                 .name(customer.getName())
